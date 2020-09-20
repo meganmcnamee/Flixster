@@ -22,8 +22,7 @@ class MoviesViewController: UIViewController , UITableViewDataSource , UITableVi
         tableView.dataSource = self
         tableView.delegate = self
 
-        // Do any additional setup after loading the view.
-        print("Hello")
+        
         
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -61,7 +60,6 @@ class MoviesViewController: UIViewController , UITableViewDataSource , UITableVi
             
             //giving access to outlets
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell") as! MovieCell
-            
             let movie = movies[indexPath.row]
             let title = movie ["title"] as! String
             let synopsis = movie["overview"] as! String
@@ -85,14 +83,35 @@ class MoviesViewController: UIViewController , UITableViewDataSource , UITableVi
             
             
         
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue:
+                            UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        
+        print("Loading up the detaails scren here")
+        
+        //Find the selected movie
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for:
+            cell)!
+        let movie = movies[indexPath.row]
+        
+        //Paass the selected movie to the detail view controller
+        
+        let detailsViewController =
+            segue.destination as! MovieDetailsViewController
+        detailsViewController.movie = movie
+        
+        //Highligh row briefly
+        tableView.deselectRow(at: indexPath,
+            animated: true)
+        
     }
-    */
+    
 
 }
